@@ -1,19 +1,13 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Image, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { HomeScreen } from '../screens/HomeScreen';
 import { ServicesScreen } from '../screens/ServicesScreen';
+import { FavoritesScreen } from '../screens/FavoritesScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { useTheme } from '../context/ThemeContext';
 
 const Tab = createBottomTabNavigator();
-
-// Иконки табов из Icons8
-const TAB_ICONS = {
-  home: 'https://img.icons8.com/fluency/48/news.png',
-  services: 'https://img.icons8.com/fluency/48/grid-view.png',
-  profile: 'https://img.icons8.com/fluency/48/user-male-circle.png',
-};
 
 export const MainTabs = () => {
   const { colors, fontScale } = useTheme();
@@ -43,10 +37,25 @@ export const MainTabs = () => {
         component={HomeScreen}
         options={{
           tabBarLabel: 'Басты бет',
-          tabBarIcon: ({ focused }) => (
-            <Image
-              source={{ uri: TAB_ICONS.home }}
-              style={[styles.tabIcon, { opacity: focused ? 1 : 0.6 }]}
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? 'newspaper' : 'newspaper-outline'}
+              size={size || 22}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{
+          tabBarLabel: 'Таңдаулылар',
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? 'star' : 'star-outline'}
+              size={size || 22}
+              color={color}
             />
           ),
         }}
@@ -56,10 +65,11 @@ export const MainTabs = () => {
         component={ServicesScreen}
         options={{
           tabBarLabel: 'Сервистер',
-          tabBarIcon: ({ focused }) => (
-            <Image
-              source={{ uri: TAB_ICONS.services }}
-              style={[styles.tabIcon, { opacity: focused ? 1 : 0.6 }]}
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? 'grid' : 'grid-outline'}
+              size={size || 22}
+              color={color}
             />
           ),
         }}
@@ -69,10 +79,11 @@ export const MainTabs = () => {
         component={ProfileScreen}
         options={{
           tabBarLabel: 'Профиль',
-          tabBarIcon: ({ focused }) => (
-            <Image
-              source={{ uri: TAB_ICONS.profile }}
-              style={[styles.tabIcon, { opacity: focused ? 1 : 0.6 }]}
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? 'person' : 'person-outline'}
+              size={size || 22}
+              color={color}
             />
           ),
         }}
@@ -80,11 +91,3 @@ export const MainTabs = () => {
     </Tab.Navigator>
   );
 };
-
-const styles = StyleSheet.create({
-  tabIcon: {
-    width: 24,
-    height: 24,
-    resizeMode: 'contain',
-  },
-});

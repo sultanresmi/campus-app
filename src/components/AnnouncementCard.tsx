@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
 
 export interface AnnouncementItem {
@@ -19,10 +20,8 @@ interface AnnouncementCardProps {
   description?: string;
   date?: string;
   onPress?: () => void;
+  onSaveOffline?: () => void;
 }
-
-// Иконка календаря из Icons8
-const CALENDAR_ICON = 'https://img.icons8.com/color/48/calendar--v1.png';
 
 export const AnnouncementCard: React.FC<AnnouncementCardProps> = ({
   item,
@@ -30,6 +29,7 @@ export const AnnouncementCard: React.FC<AnnouncementCardProps> = ({
   description,
   date,
   onPress,
+  onSaveOffline,
 }) => {
   const { colors, fontScale } = useTheme();
 
@@ -38,7 +38,7 @@ export const AnnouncementCard: React.FC<AnnouncementCardProps> = ({
   const cardDate = date || item?.date || item?.created_at || '2026 ж. 19 қазан';
 
   return (
-    <TouchableOpacity
+    <View
       style={[
         styles.card,
         {
@@ -46,50 +46,74 @@ export const AnnouncementCard: React.FC<AnnouncementCardProps> = ({
           borderColor: colors.border,
         },
       ]}
-      onPress={onPress}
-      activeOpacity={0.7}
     >
-      <View style={styles.content}>
-        <Text style={[styles.title, { color: colors.textPrimary, fontSize: 16 * fontScale }]}>
-          {cardTitle}
-        </Text>
-        {Boolean(cardDesc) && (
-          <Text
-            style={[styles.description, { color: colors.textSecondary, fontSize: 13 * fontScale }]}
-            numberOfLines={2}
-          >
-            {cardDesc}
+      <TouchableOpacity
+        style={styles.cardTopRow}
+        onPress={onPress}
+        activeOpacity={0.7}
+      >
+        <View style={styles.content}>
+          <Text style={[styles.title, { color: colors.textPrimary, fontSize: 16 * fontScale }]}>
+            {cardTitle}
           </Text>
-        )}
-        <View style={styles.dateRow}>
-          <Image source={{ uri: CALENDAR_ICON }} style={styles.dateIcon} />
-          <Text style={[styles.date, { color: colors.textSecondary, fontSize: 12 * fontScale }]}>
-            {cardDate}
-          </Text>
+          {Boolean(cardDesc) && (
+            <Text
+              style={[styles.description, { color: colors.textSecondary, fontSize: 13 * fontScale }]}
+              numberOfLines={2}
+            >
+              {cardDesc}
+            </Text>
+          )}
+          <View style={styles.dateRow}>
+            <Ionicons name="calendar-outline" size={14} color={colors.textSecondary} />
+            <Text style={[styles.date, { color: colors.textSecondary, fontSize: 12 * fontScale }]}>
+              {cardDate}
+            </Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.arrowContainer}>
-        <Text style={styles.arrow}>›</Text>
-      </View>
-    </TouchableOpacity>
+        <View style={styles.arrowContainer}>
+          <Ionicons name="chevron-forward" size={20} color="#94a3b8" />
+        </View>
+      </TouchableOpacity>
+
+      {Boolean(onSaveOffline) && (
+        <View style={[styles.footer, { borderTopColor: colors.border }]}>
+          <TouchableOpacity
+            style={styles.saveOfflineBtn}
+            onPress={onSaveOffline}
+            activeOpacity={0.8}
+          >
+            <View style={styles.btnInner}>
+              <Ionicons name="bookmark-outline" size={15} color="#1d61d2" />
+              <Text style={[styles.saveOfflineBtnText, { fontSize: 13 * fontScale }]}>
+                Офлайн сақтау (SQLite)
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      )}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
     borderRadius: 14,
-    padding: 16,
     marginHorizontal: 16,
     marginVertical: 6,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
     borderWidth: 1,
     shadowColor: '#000',
     shadowOpacity: 0.04,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     elevation: 2,
+    overflow: 'hidden',
+  },
+  cardTopRow: {
+    padding: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     cursor: 'pointer',
   },
   content: {
@@ -109,19 +133,35 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 6,
   },
-  dateIcon: {
-    width: 16,
-    height: 16,
-    resizeMode: 'contain',
-  },
   date: {},
   arrowContainer: {
     paddingLeft: 8,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  arrow: {
-    fontSize: 22,
-    color: '#94a3b8',
+  footer: {
+    borderTopWidth: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    backgroundColor: 'rgba(0,0,0,0.015)',
+    alignItems: 'flex-end',
+  },
+  saveOfflineBtn: {
+    backgroundColor: '#eff6ff',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#bfdbfe',
+    cursor: 'pointer',
+  },
+  btnInner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  saveOfflineBtnText: {
+    color: '#1d61d2',
+    fontWeight: '600',
   },
 });

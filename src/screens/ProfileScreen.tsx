@@ -9,20 +9,11 @@ import {
   Modal,
   Alert,
   ScrollView,
-  Image,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme, FontSizeOption } from '../context/ThemeContext';
-
-// Иконки из Icons8
-const ICONS = {
-  avatar: 'https://img.icons8.com/fluency/96/user-male-circle.png',
-  user: 'https://img.icons8.com/fluency/48/user-male-circle.png',
-  bell: 'https://img.icons8.com/fluency/48/appointment-reminders.png',
-  settings: 'https://img.icons8.com/fluency/48/settings.png',
-  support: 'https://img.icons8.com/fluency/48/help.png',
-  logout: 'https://img.icons8.com/fluency/48/exit.png',
-};
+import { ProfilePhoto } from '../components/ProfilePhoto';
 
 export const ProfileScreen = () => {
   const navigation = useNavigation<any>();
@@ -54,16 +45,15 @@ export const ProfileScreen = () => {
         {/* Шапка профиля */}
         <View style={[styles.header, { backgroundColor: colors.headerBackground }]}>
           <Text style={[styles.headerSubtitle, { fontSize: 13 * fontScale }]}>Campus Hub</Text>
+          
           <View style={styles.avatarContainer}>
-            <View style={styles.avatarCircle}>
-              <Image source={{ uri: ICONS.avatar }} style={styles.avatarImage} />
-            </View>
+            <ProfilePhoto />
             <Text style={[styles.userName, { fontSize: 20 * fontScale }]}>Амина С.</Text>
             <Text style={[styles.userGroup, { fontSize: 14 * fontScale }]}>CS-2024 тобы</Text>
           </View>
         </View>
 
-        {/* Пункты меню */}
+        {/* Меню пунктов */}
         <ScrollView contentContainerStyle={styles.menuContainer}>
           {/* Жеке ақпарат */}
           <TouchableOpacity
@@ -72,14 +62,14 @@ export const ProfileScreen = () => {
             onPress={() => setIsPersonalInfoModalVisible(true)}
           >
             <View style={styles.menuItemLeft}>
-              <View style={[styles.iconBox, { backgroundColor: isDarkMode ? '#334155' : '#f1f5f9' }]}>
-                <Image source={{ uri: ICONS.user }} style={styles.menuIcon} />
+              <View style={[styles.iconBox, { backgroundColor: isDarkMode ? '#334155' : '#eff6ff' }]}>
+                <Ionicons name="person-circle-outline" size={22} color="#3b82f6" />
               </View>
               <Text style={[styles.menuItemText, { color: colors.textPrimary, fontSize: 15 * fontScale }]}>
                 Жеке ақпарат
               </Text>
             </View>
-            <Text style={styles.arrowIcon}>›</Text>
+            <Ionicons name="chevron-forward" size={18} color="#94a3b8" />
           </TouchableOpacity>
 
           {/* Хабарламалар */}
@@ -89,14 +79,14 @@ export const ProfileScreen = () => {
             onPress={() => setIsNotificationsModalVisible(true)}
           >
             <View style={styles.menuItemLeft}>
-              <View style={[styles.iconBox, { backgroundColor: isDarkMode ? '#334155' : '#f1f5f9' }]}>
-                <Image source={{ uri: ICONS.bell }} style={styles.menuIcon} />
+              <View style={[styles.iconBox, { backgroundColor: isDarkMode ? '#334155' : '#fef3c7' }]}>
+                <Ionicons name="notifications-outline" size={20} color="#f59e0b" />
               </View>
               <Text style={[styles.menuItemText, { color: colors.textPrimary, fontSize: 15 * fontScale }]}>
                 Хабарламалар
               </Text>
             </View>
-            <Text style={styles.arrowIcon}>›</Text>
+            <Ionicons name="chevron-forward" size={18} color="#94a3b8" />
           </TouchableOpacity>
 
           {/* Қосымша параметрлері */}
@@ -106,14 +96,14 @@ export const ProfileScreen = () => {
             onPress={() => setIsSettingsModalVisible(true)}
           >
             <View style={styles.menuItemLeft}>
-              <View style={[styles.iconBox, { backgroundColor: isDarkMode ? '#334155' : '#f1f5f9' }]}>
-                <Image source={{ uri: ICONS.settings }} style={styles.menuIcon} />
+              <View style={[styles.iconBox, { backgroundColor: isDarkMode ? '#334155' : '#e0e7ff' }]}>
+                <Ionicons name="settings-outline" size={20} color="#6366f1" />
               </View>
               <Text style={[styles.menuItemText, { color: colors.textPrimary, fontSize: 15 * fontScale }]}>
                 Қосымша параметрлері
               </Text>
             </View>
-            <Text style={styles.arrowIcon}>›</Text>
+            <Ionicons name="chevron-forward" size={18} color="#94a3b8" />
           </TouchableOpacity>
 
           {/* Көмек және қолдау */}
@@ -123,14 +113,14 @@ export const ProfileScreen = () => {
             onPress={() => setIsHelpModalVisible(true)}
           >
             <View style={styles.menuItemLeft}>
-              <View style={[styles.iconBox, { backgroundColor: isDarkMode ? '#334155' : '#f1f5f9' }]}>
-                <Image source={{ uri: ICONS.support }} style={styles.menuIcon} />
+              <View style={[styles.iconBox, { backgroundColor: isDarkMode ? '#334155' : '#ecfdf5' }]}>
+                <Ionicons name="help-circle-outline" size={21} color="#10b981" />
               </View>
               <Text style={[styles.menuItemText, { color: colors.textPrimary, fontSize: 15 * fontScale }]}>
                 Көмек және қолдау
               </Text>
             </View>
-            <Text style={styles.arrowIcon}>›</Text>
+            <Ionicons name="chevron-forward" size={18} color="#94a3b8" />
           </TouchableOpacity>
 
           {/* Жүйеден шығу */}
@@ -141,17 +131,17 @@ export const ProfileScreen = () => {
           >
             <View style={styles.menuItemLeft}>
               <View style={[styles.iconBox, { backgroundColor: '#fee2e2' }]}>
-                <Image source={{ uri: ICONS.logout }} style={styles.menuIcon} />
+                <Ionicons name="log-out-outline" size={20} color="#ef4444" />
               </View>
               <Text style={[styles.menuItemText, { color: '#ef4444', fontSize: 15 * fontScale, fontWeight: '600' }]}>
                 Жүйеден шығу
               </Text>
             </View>
-            <Text style={[styles.arrowIcon, { color: '#ef4444' }]}>›</Text>
+            <Ionicons name="chevron-forward" size={18} color="#ef4444" />
           </TouchableOpacity>
         </ScrollView>
 
-        {/* МОДАЛЬНОЕ ОКНО: ҚОСЫМША ПАРАМЕТРЛЕРІ */}
+        {/* МОДАЛЬДІ ТЕРЕЗЕ: ҚОСЫМША ПАРАМЕТРЛЕРІ */}
         <Modal
           visible={isSettingsModalVisible}
           animationType="slide"
@@ -169,7 +159,6 @@ export const ProfileScreen = () => {
                 </TouchableOpacity>
               </View>
 
-              {/* Переключатель темной темы */}
               <View style={[styles.settingRow, { borderColor: colors.border }]}>
                 <View>
                   <Text style={[styles.settingLabel, { color: colors.textPrimary, fontSize: 16 * fontScale }]}>
@@ -187,7 +176,6 @@ export const ProfileScreen = () => {
                 />
               </View>
 
-              {/* Выбор размера шрифта */}
               <View style={styles.settingRowNoBorder}>
                 <Text style={[styles.settingLabel, { color: colors.textPrimary, fontSize: 16 * fontScale, marginBottom: 8 }]}>
                   Қаріп өлшемі
@@ -228,7 +216,7 @@ export const ProfileScreen = () => {
           </View>
         </Modal>
 
-        {/* МОДАЛЬНОЕ ОКНО: ЖЕКЕ АҚПАРАТ */}
+        {/* МОДАЛЬДІ ТЕРЕЗЕ: ЖЕКЕ АҚПАРАТ */}
         <Modal
           visible={isPersonalInfoModalVisible}
           animationType="fade"
@@ -256,7 +244,7 @@ export const ProfileScreen = () => {
           </View>
         </Modal>
 
-        {/* МОДАЛЬНОЕ ОКНО: ХАБАРЛАМАЛАР */}
+        {/* МОДАЛЬДІ ТЕРЕЗЕ: ХАБАРЛАМАЛАР */}
         <Modal
           visible={isNotificationsModalVisible}
           animationType="fade"
@@ -281,7 +269,7 @@ export const ProfileScreen = () => {
           </View>
         </Modal>
 
-        {/* МОДАЛЬНОЕ ОКНО: КӨМЕК ЖӘНЕ ҚОЛДАУ */}
+        {/* МОДАЛЬДІ ТЕРЕЗЕ: КӨМЕК ЖӘНЕ ҚОЛДАУ */}
         <Modal
           visible={isHelpModalVisible}
           animationType="fade"
@@ -321,7 +309,7 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingTop: 16,
-    paddingBottom: 28,
+    paddingBottom: 20,
     paddingHorizontal: 20,
     alignItems: 'center',
   },
@@ -333,29 +321,13 @@ const styles = StyleSheet.create({
   },
   avatarContainer: {
     alignItems: 'center',
-  },
-  avatarCircle: {
-    width: 76,
-    height: 76,
-    borderRadius: 38,
-    backgroundColor: '#ffffff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    elevation: 3,
-    overflow: 'hidden',
-  },
-  avatarImage: {
-    width: 76,
-    height: 76,
+    width: '100%',
   },
   userName: {
     color: '#ffffff',
     fontWeight: 'bold',
-    marginBottom: 4,
+    marginTop: 4,
+    marginBottom: 2,
   },
   userGroup: {
     color: '#bfdbfe',
@@ -390,17 +362,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  menuIcon: {
-    width: 24,
-    height: 24,
-    resizeMode: 'contain',
-  },
   menuItemText: {
     fontWeight: '500',
-  },
-  arrowIcon: {
-    fontSize: 20,
-    color: '#94a3b8',
   },
   modalOverlay: {
     flex: 1,

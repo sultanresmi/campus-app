@@ -1,9 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useTheme } from '../context/ThemeContext';
-
-const CALENDAR_ICON = 'https://img.icons8.com/color/48/calendar--v1.png';
 
 export const NewsDetailsScreen = () => {
   const route = useRoute<any>();
@@ -29,7 +28,7 @@ export const NewsDetailsScreen = () => {
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={[styles.card, { backgroundColor: colors.cardBackground, borderColor: colors.border }]}>
             <View style={styles.dateBadge}>
-              <Image source={{ uri: CALENDAR_ICON }} style={styles.dateIcon} />
+              <Ionicons name="calendar-outline" size={14} color="#64748b" />
               <Text style={[styles.dateText, { fontSize: 12 * fontScale }]}>{date}</Text>
             </View>
             <Text style={[styles.title, { color: colors.textPrimary, fontSize: 20 * fontScale }]}>{title}</Text>
@@ -100,11 +99,6 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginBottom: 12,
     gap: 6,
-  },
-  dateIcon: {
-    width: 14,
-    height: 14,
-    resizeMode: 'contain',
   },
   dateText: {
     color: '#64748b',
