@@ -6,6 +6,7 @@ import { MainTabs } from './src/navigation/MainTabs';
 import { NewsDetailsScreen } from './src/screens/NewsDetailsScreen';
 import { DetailsScreen } from './src/screens/DetailsScreen';
 import { LoginScreen } from './src/screens/LoginScreen';
+import { EventRegistrationScreen } from './src/screens/EventRegistrationScreen';
 import { ThemeProvider, useTheme } from './src/context/ThemeContext';
 
 const Stack = createNativeStackNavigator();
@@ -26,6 +27,7 @@ function AppContent() {
         <Stack.Screen name="Main" component={MainTabs} />
         <Stack.Screen name="NewsDetailsScreen" component={NewsDetailsScreen} />
         <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
+        <Stack.Screen name="EventRegistrationScreen" component={EventRegistrationScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
